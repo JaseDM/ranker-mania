@@ -1,13 +1,13 @@
 
 import { usePlayerManager } from '@/hooks/usePlayerManager';
-import AddPlayerForm from '@/components/AddPlayerForm';
 import RankingTable from '@/components/RankingTable';
 import AdminActions from '@/components/AdminActions';
-import { Trophy } from 'lucide-react';
+import { Trophy, UserPlus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { 
-    addPlayer, 
     getRankedPlayers, 
     increaseScore, 
     deletePlayer,
@@ -16,6 +16,7 @@ const Index = () => {
   } = usePlayerManager();
   
   const rankedPlayers = getRankedPlayers();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
@@ -26,28 +27,29 @@ const Index = () => {
           <h1 className="text-3xl font-bold text-center">Ranking de Jugadores</h1>
         </div>
       
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Formulario para añadir jugadores */}
-          <div className="md:col-span-1">
-            <AddPlayerForm onAddPlayer={addPlayer} />
+        <div className="grid grid-cols-1 gap-8 mb-8">
+          {/* Botón para ir a registrar jugadores */}
+          <div className="flex justify-center mb-4">
+            <Button onClick={() => navigate('/register')} className="px-6">
+              <UserPlus className="mr-2 h-4 w-4" />
+              Registrar Jugadores
+            </Button>
           </div>
           
           {/* Tabla de ranking */}
-          <div className="md:col-span-2">
-            <div className="flex flex-col gap-8">
-              <RankingTable 
-                players={rankedPlayers}
-                onIncreaseScore={increaseScore}
-                onDeletePlayer={deletePlayer}
-              />
-              
-              {/* Botones de administración */}
-              <AdminActions 
-                onResetScores={resetAllScores} 
-                onDeletePlayers={deleteAllPlayers} 
-              />
-            </div>
+          <div>
+            <RankingTable 
+              players={rankedPlayers}
+              onIncreaseScore={increaseScore}
+              onDeletePlayer={deletePlayer}
+            />
           </div>
+          
+          {/* Botones de administración */}
+          <AdminActions 
+            onResetScores={resetAllScores} 
+            onDeletePlayers={deleteAllPlayers} 
+          />
         </div>
       </div>
     </div>

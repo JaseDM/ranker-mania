@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
   Table, 
@@ -10,6 +11,7 @@ import {
 } from '@/components/ui/table';
 import { Player } from '@/models/Player';
 import { Plus, UserX, Trophy } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface RankingTableProps {
   players: Player[];
@@ -22,6 +24,27 @@ const RankingTable = ({
   onIncreaseScore, 
   onDeletePlayer 
 }: RankingTableProps) => {
+  // Estado para manejar puntos personalizados por jugador
+  const [customPoints, setCustomPoints] = useState<Record<string, number>>({});
+
+  const handlePointsChange = (playerId: string, value: string) => {
+    const points = parseInt(value) || 0;
+    setCustomPoints({
+      ...customPoints,
+      [playerId]: points
+    });
+  };
+
+  const handleAddPoints = (playerId: string) => {
+    const points = customPoints[playerId] || 1;
+    onIncreaseScore(playerId, points);
+    // Reiniciar el campo después de añadir puntos
+    setCustomPoints({
+      ...customPoints,
+      [playerId]: 1
+    });
+  };
+
   return (
     <div className="w-full overflow-hidden rounded-lg border">
       <Table>
@@ -53,14 +76,23 @@ const RankingTable = ({
                 <TableCell className="font-medium">{player.name}</TableCell>
                 <TableCell className="text-center">{player.score}</TableCell>
                 <TableCell className="text-right">
-                  <div className="flex justify-end gap-2">
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => onIncreaseScore(player.id, 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
+                  <div className="flex justify-end gap-2 items-center">
+                    <div className="flex items-center gap-2">
+                      <Input
+                        type="number"
+                        min="1"
+                        className="w-16 h-8 text-center"
+                        value={customPoints[player.id] || 1}
+                        onChange={(e) => handlePointsChange(player.id, e.target.value)}
+                      />
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleAddPoints(player.id)}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
                     <Button 
                       size="sm" 
                       variant="destructive"
