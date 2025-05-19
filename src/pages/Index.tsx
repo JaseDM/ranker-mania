@@ -1,21 +1,10 @@
 
-import { usePlayerManager } from '@/hooks/usePlayerManager';
-import RankingTable from '@/components/RankingTable';
-import AdminActions from '@/components/AdminActions';
-import { Trophy, UserPlus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { Trophy, UserPlus, List } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Index = () => {
-  const { 
-    getRankedPlayers, 
-    increaseScore, 
-    deletePlayer,
-    resetAllScores,
-    deleteAllPlayers
-  } = usePlayerManager();
-  
-  const rankedPlayers = getRankedPlayers();
   const navigate = useNavigate();
 
   return (
@@ -24,32 +13,45 @@ const Index = () => {
         {/* Cabecera */}
         <div className="flex items-center justify-center mb-8">
           <Trophy className="h-8 w-8 mr-3 text-yellow-500" />
-          <h1 className="text-3xl font-bold text-center">Ranking de Jugadores</h1>
+          <h1 className="text-3xl font-bold text-center">Sistema de Ranking</h1>
         </div>
       
-        <div className="grid grid-cols-1 gap-8 mb-8">
-          {/* Botón para ir a registrar jugadores */}
-          <div className="flex justify-center mb-4">
-            <Button onClick={() => navigate('/register')} className="px-6">
-              <UserPlus className="mr-2 h-4 w-4" />
-              Registrar Jugadores
-            </Button>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Trophy className="h-5 w-5 mr-2 text-yellow-500" />
+                Ver Ranking
+              </CardTitle>
+              <CardDescription>
+                Consulta la clasificación actual de todos los jugadores
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/ranking')} className="w-full">
+                <List className="h-4 w-4 mr-2" />
+                Ver Ranking
+              </Button>
+            </CardContent>
+          </Card>
           
-          {/* Tabla de ranking */}
-          <div>
-            <RankingTable 
-              players={rankedPlayers}
-              onIncreaseScore={increaseScore}
-              onDeletePlayer={deletePlayer}
-            />
-          </div>
-          
-          {/* Botones de administración */}
-          <AdminActions 
-            onResetScores={resetAllScores} 
-            onDeletePlayers={deleteAllPlayers} 
-          />
+          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <UserPlus className="h-5 w-5 mr-2 text-blue-500" />
+                Registro de Jugadores
+              </CardTitle>
+              <CardDescription>
+                Registra nuevos jugadores en el sistema
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/register')} className="w-full">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Registrar Jugadores
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
