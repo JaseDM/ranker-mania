@@ -1,17 +1,19 @@
 
 import { usePlayerManager } from '@/hooks/usePlayerManager';
-import RankingTable from '@/components/RankingTable';
-import { Trophy } from 'lucide-react';
+import { Trophy, UserPlus, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from '@/components/ui/table';
 
 const Ranking = () => {
-  const { 
-    getRankedPlayers, 
-    increaseScore, 
-    deletePlayer,
-  } = usePlayerManager();
-  
+  const { getRankedPlayers } = usePlayerManager();
   const rankedPlayers = getRankedPlayers();
   const navigate = useNavigate();
 
@@ -25,13 +27,40 @@ const Ranking = () => {
         </div>
       
         <div className="grid grid-cols-1 gap-8 mb-8">
-          {/* Tabla de ranking */}
-          <div>
-            <RankingTable 
-              players={rankedPlayers}
-              onIncreaseScore={increaseScore}
-              onDeletePlayer={deletePlayer}
-            />
+          {/* Tabla de ranking (solo visualización) */}
+          <div className="w-full overflow-hidden rounded-lg border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-12 text-center">#</TableHead>
+                  <TableHead>Jugador</TableHead>
+                  <TableHead className="text-center">Puntos</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {rankedPlayers.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={3} className="text-center py-8">
+                      <div className="flex flex-col items-center justify-center text-muted-foreground">
+                        <Trophy className="h-12 w-12 mb-2" />
+                        <p className="text-lg">No hay jugadores registrados</p>
+                        <p className="text-sm">Añade jugadores para comenzar</p>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  rankedPlayers.map((player, index) => (
+                    <TableRow key={player.id}>
+                      <TableCell className="text-center font-medium">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell className="font-medium">{player.name}</TableCell>
+                      <TableCell className="text-center">{player.score}</TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
           </div>
           
           {/* Botones de navegación */}
@@ -40,7 +69,7 @@ const Ranking = () => {
               Inicio
             </Button>
             <Button onClick={() => navigate('/register')} className="px-6">
-              Registrar Jugadores
+              Gestionar Jugadores
             </Button>
           </div>
         </div>

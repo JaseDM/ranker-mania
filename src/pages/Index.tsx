@@ -30,7 +30,7 @@ const Index = () => {
             <CardContent>
               <Button onClick={() => navigate('/ranking')} className="w-full">
                 <List className="h-4 w-4 mr-2" />
-                Ver Ranking
+                Ver Solo Ranking
               </Button>
             </CardContent>
           </Card>
@@ -39,16 +39,16 @@ const Index = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <UserPlus className="h-5 w-5 mr-2 text-blue-500" />
-                Registro de Jugadores
+                Gestión Completa
               </CardTitle>
               <CardDescription>
-                Registra nuevos jugadores en el sistema
+                Registra jugadores, modifica puntuaciones y gestiona el ranking
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button onClick={() => navigate('/register')} className="w-full">
                 <UserPlus className="h-4 w-4 mr-2" />
-                Registrar Jugadores
+                Gestionar Jugadores
               </Button>
             </CardContent>
           </Card>
