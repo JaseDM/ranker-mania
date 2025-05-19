@@ -1,6 +1,6 @@
 
 import { usePlayerManager } from '@/hooks/usePlayerManager';
-import { Trophy, UserPlus, List } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -11,14 +11,42 @@ import {
   TableRow, 
   TableCell 
 } from '@/components/ui/table';
+import { useEffect, useState } from 'react';
+import { Player } from '@/models/Player';
 
 const Ranking = () => {
   const { getRankedPlayers } = usePlayerManager();
-  const rankedPlayers = getRankedPlayers();
+  const [rankedPlayers, setRankedPlayers] = useState<Player[]>([]);
   const navigate = useNavigate();
+
+  // Poll for updates every second
+  useEffect(() => {
+    // Initial load
+    setRankedPlayers(getRankedPlayers());
+    
+    // Set up interval for reactive updates
+    const intervalId = setInterval(() => {
+      setRankedPlayers(getRankedPlayers());
+    }, 1000);
+    
+    // Clean up the interval when component unmounts
+    return () => clearInterval(intervalId);
+  }, [getRankedPlayers]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      {/* Discreet exit button */}
+      <div className="absolute top-4 left-4">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={() => navigate('/')} 
+          className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
+      </div>
+      
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Cabecera */}
         <div className="flex items-center justify-center mb-8">
@@ -61,16 +89,6 @@ const Ranking = () => {
                 )}
               </TableBody>
             </Table>
-          </div>
-          
-          {/* Botones de navegación */}
-          <div className="flex justify-center gap-4">
-            <Button onClick={() => navigate('/')} className="px-6">
-              Inicio
-            </Button>
-            <Button onClick={() => navigate('/register')} className="px-6">
-              Gestionar Jugadores
-            </Button>
           </div>
         </div>
       </div>
