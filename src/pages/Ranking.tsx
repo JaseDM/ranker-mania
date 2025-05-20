@@ -1,6 +1,6 @@
 
 import { usePlayerManager } from '@/hooks/usePlayerManager';
-import { Trophy, ArrowLeft } from 'lucide-react';
+import { Trophy, ArrowLeft, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -33,10 +33,15 @@ const Ranking = () => {
     return () => clearInterval(intervalId);
   }, [getRankedPlayers]);
 
+  // Function to manually refresh the ranking list
+  const handleRefresh = () => {
+    setRankedPlayers(getRankedPlayers());
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Discreet exit button */}
-      <div className="absolute top-4 left-4">
+      {/* Discreet action buttons */}
+      <div className="absolute top-4 left-4 flex items-center space-x-2">
         <Button 
           variant="ghost" 
           size="sm" 
@@ -45,16 +50,24 @@ const Ranking = () => {
         >
           <ArrowLeft className="h-4 w-4" />
         </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleRefresh}
+          className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+        >
+          <RefreshCw className="h-4 w-4" />
+        </Button>
       </div>
       
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Cabecera */}
         <div className="flex items-center justify-center mb-8">
           <Trophy className="h-8 w-8 mr-3 text-yellow-500" />
           <h1 className="text-3xl font-bold text-center">Ranking de Jugadores</h1>
         </div>
       
-        <div className="grid grid-cols-1 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Tabla de ranking (solo visualización) */}
           <div className="w-full overflow-hidden rounded-lg border">
             <Table>
@@ -89,6 +102,18 @@ const Ranking = () => {
                 )}
               </TableBody>
             </Table>
+          </div>
+          
+          {/* Sponsor Logo Section */}
+          <div className="flex items-center justify-center">
+            <div className="rounded-lg border p-6 flex flex-col items-center justify-center bg-white dark:bg-gray-800 h-full w-full">
+              <img 
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=500&h=300&fit=crop" 
+                alt="Sponsor Logo" 
+                className="max-w-full max-h-64 rounded-lg shadow-md"
+              />
+              <p className="mt-4 text-lg font-medium text-gray-600 dark:text-gray-300">Patrocinador Oficial</p>
+            </div>
           </div>
         </div>
       </div>
