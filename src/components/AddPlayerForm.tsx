@@ -4,18 +4,21 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { UserPlus } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 interface AddPlayerFormProps {
-  onAddPlayer: (name: string) => void;
+  onAddPlayer: (name: string, initialScore: number) => void;
 }
 
 const AddPlayerForm = ({ onAddPlayer }: AddPlayerFormProps) => {
   const [playerName, setPlayerName] = useState('');
+  const [initialScore, setInitialScore] = useState(0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAddPlayer(playerName);
+    onAddPlayer(playerName, initialScore);
     setPlayerName('');
+    setInitialScore(0);
   };
 
   return (
@@ -26,12 +29,29 @@ const AddPlayerForm = ({ onAddPlayer }: AddPlayerFormProps) => {
       <form onSubmit={handleSubmit}>
         <CardContent>
           <div className="flex flex-col space-y-4">
-            <Input
-              placeholder="Nombre del jugador"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              className="flex-1"
-            />
+            <div className="space-y-2">
+              <Label htmlFor="playerName">Nombre del jugador</Label>
+              <Input
+                id="playerName"
+                placeholder="Nombre del jugador"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                className="flex-1"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="initialScore">Puntos iniciales</Label>
+              <Input
+                id="initialScore"
+                type="number"
+                min={0}
+                placeholder="Puntos iniciales"
+                value={initialScore}
+                onChange={(e) => setInitialScore(parseInt(e.target.value) || 0)}
+                className="flex-1"
+              />
+            </div>
           </div>
         </CardContent>
         <CardFooter>

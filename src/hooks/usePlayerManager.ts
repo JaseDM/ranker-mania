@@ -46,7 +46,7 @@ export const usePlayerManager = () => {
   }, [players]);
 
   // Añadir un nuevo jugador
-  const addPlayer = (name: string) => {
+  const addPlayer = (name: string, initialScore: number = 0) => {
     if (!name.trim()) {
       toast.error('El nombre del jugador no puede estar vacío');
       return;
@@ -64,7 +64,7 @@ export const usePlayerManager = () => {
     const newPlayer: Player = {
       id: Date.now().toString(),
       name: name.trim(),
-      score: 0,
+      score: initialScore,
     };
 
     setPlayers((prev) => [...prev, newPlayer]);

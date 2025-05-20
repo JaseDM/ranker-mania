@@ -33,7 +33,7 @@ const Register = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Formulario para añadir jugadores */}
           <div className="md:col-span-1">
-            <AddPlayerForm onAddPlayer={addPlayer} />
+            <AddPlayerForm onAddPlayer={(name, initialScore) => addPlayer(name, initialScore)} />
             
             <div className="mt-8">
               <AdminActions 
