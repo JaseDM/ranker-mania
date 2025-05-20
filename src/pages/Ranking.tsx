@@ -19,8 +19,10 @@ const Ranking = () => {
   const [rankedPlayers, setRankedPlayers] = useState<Player[]>([]);
   const navigate = useNavigate();
 
-  // Poll for updates every second
+  // Poll for updates and watch for localStorage changes
   useEffect(() => {
+    console.log('Ranking screen: Setting up update listeners');
+    
     // Initial load
     setRankedPlayers(getRankedPlayers());
     
@@ -35,6 +37,7 @@ const Ranking = () => {
 
   // Function to manually refresh the ranking list
   const handleRefresh = () => {
+    console.log('Manual refresh triggered');
     setRankedPlayers(getRankedPlayers());
   };
 

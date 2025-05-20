@@ -17,11 +17,32 @@ export const usePlayerManager = () => {
         toast.error('Error al cargar jugadores');
       }
     }
+    
+    // Detectar cambios en el localStorage desde otras ventanas/pestañas
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'players' && e.newValue) {
+        try {
+          setPlayers(JSON.parse(e.newValue));
+          console.log('Datos actualizados desde otra ventana');
+        } catch (error) {
+          console.error('Error al procesar datos de otra ventana:', error);
+        }
+      }
+    };
+    
+    // Nos suscribimos a cambios en localStorage (eventos entre ventanas)
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // Guardar jugadores en localStorage cada vez que cambien
   useEffect(() => {
     localStorage.setItem('players', JSON.stringify(players));
+    // Añadimos una marca de tiempo para forzar el evento storage en otras ventanas
+    localStorage.setItem('players_timestamp', Date.now().toString());
   }, [players]);
 
   // Añadir un nuevo jugador
