@@ -24,11 +24,11 @@ const Ranking = () => {
     console.log('Ranking screen: Setting up update listeners');
     
     // Initial load
-    setRankedPlayers(getRankedPlayers());
+    setRankedPlayers(getRankedPlayers().slice(0, 20));
     
     // Set up interval for reactive updates
     const intervalId = setInterval(() => {
-      setRankedPlayers(getRankedPlayers());
+      setRankedPlayers(getRankedPlayers().slice(0, 20));
     }, 1000);
     
     // Clean up the interval when component unmounts
@@ -38,7 +38,7 @@ const Ranking = () => {
   // Function to manually refresh the ranking list
   const handleRefresh = () => {
     console.log('Manual refresh triggered');
-    setRankedPlayers(getRankedPlayers());
+    setRankedPlayers(getRankedPlayers().slice(0, 20));
   };
 
   // Function to determine rank style based on position
@@ -86,9 +86,9 @@ const Ranking = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-gradient-to-r from-red-600 to-yellow-500">
-                  <TableHead className="w-24 text-center text-3xl py-8 text-white font-bold">#</TableHead>
-                  <TableHead className="text-3xl py-8 text-white font-bold">Jugador</TableHead>
-                  <TableHead className="text-center text-3xl py-8 text-white font-bold">Puntos</TableHead>
+                  <TableHead className="w-20 text-center text-2xl py-4 text-white font-bold">#</TableHead>
+                  <TableHead className="text-2xl py-4 text-white font-bold">Jugador</TableHead>
+                  <TableHead className="text-center text-2xl py-4 text-white font-bold">Puntos</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -105,13 +105,13 @@ const Ranking = () => {
                 ) : (
                   rankedPlayers.map((player, index) => (
                     <TableRow key={player.id} className={index < 3 ? "bg-gradient-to-r from-yellow-50 to-red-50" : "bg-white hover:bg-gray-50"}>
-                      <TableCell className={`text-center font-bold text-5xl py-8 ${getRankStyle(index)}`}>
+                      <TableCell className={`text-center font-bold text-3xl py-3 ${getRankStyle(index)}`}>
                         {index + 1}
                       </TableCell>
-                      <TableCell className="font-bold text-4xl py-8 text-gray-800">
+                      <TableCell className="font-bold text-2xl py-3 text-gray-800">
                         {player.name}
                       </TableCell>
-                      <TableCell className="text-center text-6xl font-black py-8" style={{color: '#DB0007'}}>
+                      <TableCell className="text-center text-3xl font-black py-3" style={{color: '#DB0007'}}>
                         {player.score}
                       </TableCell>
                     </TableRow>
