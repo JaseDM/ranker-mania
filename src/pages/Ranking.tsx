@@ -125,8 +125,12 @@ const Ranking = () => {
           <div className="h-full flex items-center justify-center">
             <div className="rounded-2xl border-4 border-white p-8 flex flex-col items-center justify-center bg-white h-full w-full shadow-2xl">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-80 h-80 bg-yellow-400 rounded-full flex items-center justify-center shadow-2xl">
-                  <span className="text-red-600 text-9xl font-black">M</span>
+                <div className="w-80 h-80 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-gray-100">
+                  <img 
+                    src="/lovable-uploads/5a594226-3461-40ca-9838-e0a75ef90f3e.png" 
+                    alt="McDonald's Logo" 
+                    className="w-72 h-72 object-contain"
+                  />
                 </div>
               </div>
               <p className="text-3xl font-bold" style={{color: '#DB0007'}}>Patrocinador Oficial</p>
