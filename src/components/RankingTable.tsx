@@ -54,14 +54,14 @@ const RankingTable = ({
   };
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border shadow-lg">
+    <div className="w-full overflow-hidden rounded-lg border shadow-lg bg-white">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-100 dark:bg-gray-800">
-            <TableHead className="w-16 text-center text-lg">#</TableHead>
-            <TableHead className="text-lg">Jugador</TableHead>
-            <TableHead className="text-center text-lg">Puntos</TableHead>
-            <TableHead className="text-right text-lg">Acciones</TableHead>
+          <TableRow className="bg-gradient-to-r from-red-600 to-yellow-500">
+            <TableHead className="w-16 text-center text-lg text-white font-bold">#</TableHead>
+            <TableHead className="text-lg text-white font-bold">Jugador</TableHead>
+            <TableHead className="text-center text-lg text-white font-bold">Puntos</TableHead>
+            <TableHead className="text-right text-lg text-white font-bold">Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,7 +69,7 @@ const RankingTable = ({
             <TableRow>
               <TableCell colSpan={4} className="text-center py-10">
                 <div className="flex flex-col items-center justify-center text-muted-foreground">
-                  <Trophy className="h-14 w-14 mb-3" />
+                  <Trophy className="h-14 w-14 mb-3" style={{color: '#DB0007'}} />
                   <p className="text-xl">No hay jugadores registrados</p>
                   <p className="text-lg mt-1">Añade jugadores para comenzar</p>
                 </div>
@@ -77,12 +77,12 @@ const RankingTable = ({
             </TableRow>
           ) : (
             players.map((player, index) => (
-              <TableRow key={player.id} className={index < 3 ? "bg-opacity-10 bg-yellow-50 dark:bg-opacity-10 dark:bg-blue-900" : ""}>
+              <TableRow key={player.id} className={index < 3 ? "bg-gradient-to-r from-yellow-50 to-red-50" : "hover:bg-gray-50"}>
                 <TableCell className={`text-center font-medium text-xl py-4 ${getRankStyle(index)}`}>
                   {index + 1}
                 </TableCell>
-                <TableCell className="font-medium text-xl py-4">{player.name}</TableCell>
-                <TableCell className="text-center text-2xl font-bold py-4 text-blue-600 dark:text-blue-400">
+                <TableCell className="font-medium text-xl py-4 text-gray-800">{player.name}</TableCell>
+                <TableCell className="text-center text-2xl font-bold py-4" style={{color: '#DB0007'}}>
                   {player.score}
                 </TableCell>
                 <TableCell className="text-right py-4">
@@ -91,7 +91,7 @@ const RankingTable = ({
                       <Input
                         type="number"
                         min="1"
-                        className="w-20 h-9 text-center text-lg"
+                        className="w-20 h-9 text-center text-lg border-red-200 focus:border-red-500"
                         value={customPoints[player.id] || 1}
                         onChange={(e) => handlePointsChange(player.id, e.target.value)}
                       />
@@ -99,7 +99,7 @@ const RankingTable = ({
                         size="sm" 
                         variant="outline"
                         onClick={() => handleAddPoints(player.id)}
-                        className="h-9 px-3"
+                        className="h-9 px-3 border-yellow-500 text-yellow-600 hover:bg-yellow-50"
                       >
                         <Plus className="h-5 w-5" />
                       </Button>
@@ -109,6 +109,7 @@ const RankingTable = ({
                       variant="destructive"
                       onClick={() => onDeletePlayer(player.id)}
                       className="h-9"
+                      style={{backgroundColor: '#DB0007'}}
                     >
                       <UserX className="h-5 w-5" />
                     </Button>
