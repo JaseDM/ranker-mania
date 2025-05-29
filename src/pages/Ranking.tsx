@@ -71,18 +71,18 @@ const Ranking = () => {
         </Button>
       </div>
       
-      <div className="container mx-auto px-8 py-12 max-w-7xl">
+      <div className="container mx-auto px-8 py-12 max-w-7xl h-screen flex flex-col">
         {/* Cabecera */}
-        <div className="flex items-center justify-center mb-16">
-          <Trophy className="h-20 w-20 mr-6 text-yellow-400 drop-shadow-lg" />
-          <h1 className="text-7xl md:text-8xl font-bold text-center text-white drop-shadow-2xl">
+        <div className="flex items-center justify-center mb-8">
+          <Trophy className="h-16 w-16 mr-4 text-yellow-400 drop-shadow-lg" />
+          <h1 className="text-5xl md:text-6xl font-bold text-center text-white drop-shadow-2xl">
             Ranking de Jugadores
           </h1>
         </div>
       
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 flex-1">
           {/* Tabla de ranking (solo visualización) */}
-          <div className="w-full overflow-hidden rounded-2xl shadow-2xl" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
+          <div className="h-full overflow-hidden rounded-2xl shadow-2xl" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
             <Table>
               <TableHeader>
                 <TableRow className="bg-gradient-to-r from-red-600 to-yellow-500">
@@ -122,14 +122,14 @@ const Ranking = () => {
           </div>
           
           {/* Sponsor Logo Section */}
-          <div className="flex items-center justify-center">
+          <div className="h-full flex items-center justify-center">
             <div className="rounded-2xl border-4 border-white p-8 flex flex-col items-center justify-center bg-white h-full w-full shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=500&h=300&fit=crop" 
-                alt="Sponsor Logo" 
-                className="max-w-full max-h-80 rounded-xl shadow-lg"
-              />
-              <p className="mt-6 text-2xl font-bold" style={{color: '#DB0007'}}>Patrocinador Oficial</p>
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-80 h-80 bg-yellow-400 rounded-full flex items-center justify-center shadow-2xl">
+                  <span className="text-red-600 text-9xl font-black">M</span>
+                </div>
+              </div>
+              <p className="text-3xl font-bold" style={{color: '#DB0007'}}>Patrocinador Oficial</p>
             </div>
           </div>
         </div>
