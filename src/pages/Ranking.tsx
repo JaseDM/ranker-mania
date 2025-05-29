@@ -71,16 +71,16 @@ const Ranking = () => {
         </Button>
       </div>
       
-      <div className="container mx-auto px-8 py-12 max-w-7xl h-screen flex flex-col">
+      <div className="px-[4%] py-12 h-screen flex flex-col">
         {/* Cabecera */}
         <div className="flex items-center justify-center mb-8">
-          <Trophy className="h-16 w-16 mr-4 text-yellow-400 drop-shadow-lg" />
-          <h1 className="text-5xl md:text-6xl font-bold text-center text-white drop-shadow-2xl">
+          <Trophy className="h-12 w-12 mr-4 text-yellow-400 drop-shadow-lg" />
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white drop-shadow-2xl">
             Ranking de Jugadores
           </h1>
         </div>
       
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1 w-full">
           {/* Tabla de ranking (solo visualización) */}
           <div className="h-full overflow-hidden rounded-2xl shadow-2xl" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
             <Table>
