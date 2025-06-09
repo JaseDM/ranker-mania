@@ -1,4 +1,3 @@
-
 import { usePlayerManager } from '@/hooks/usePlayerManager';
 import { Trophy, ArrowLeft, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -44,13 +43,60 @@ const Ranking = () => {
   // Function to determine rank style based on position
   const getRankStyle = (index: number) => {
     if (index === 0) return "text-yellow-400 font-bold text-shadow-lg"; // Gold for 1st
-    if (index === 1) return "text-gray-300 font-bold text-shadow-lg"; // Silver for 2nd
+    if (index === 1) return "text-yellow-600 font-bold text-shadow-lg"; // Silver for 2nd
     if (index === 2) return "text-amber-600 font-bold text-shadow-lg"; // Bronze for 3rd
-    return "text-white font-semibold"; // Others
+    return "text-gray-300 font-semibold"; // Others
   };
 
+  // Split players into two groups
+  const firstTenPlayers = rankedPlayers.slice(0, 10);
+  const nextTenPlayers = rankedPlayers.slice(10, 20);
+
+  // Function to render a table with players
+  const renderTable = (players: Player[], startIndex: number) => (
+    <Table>
+      <TableHeader>
+        <TableRow className="bg-gray-900">
+          <TableHead className="w-20 text-center text-2xl py-4 text-white font-bold">#</TableHead>
+          <TableHead className="text-2xl py-4 text-white font-bold">Jugador</TableHead>
+          <TableHead className="text-center text-2xl py-4 text-white font-bold">Puntos</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {players.length === 0 ? (
+          <TableRow>
+            <TableCell colSpan={3} className="text-center py-20">
+              <div className="flex flex-col items-center justify-center text-gray-600">
+                <Trophy className="h-24 w-24 mb-6 text-gray-400" />
+                <p className="text-4xl font-semibold">No hay jugadores</p>
+                <p className="text-3xl mt-4">en esta sección</p>
+              </div>
+            </TableCell>
+          </TableRow>
+        ) : (
+          players.map((player, index) => {
+            const globalIndex = startIndex + index;
+            return (
+              <TableRow key={player.id} className={globalIndex < 3 ? "bg-gradient-to-r from-yellow-50 to-red-50" : "bg-white hover:bg-gray-50"}>
+                <TableCell className={`text-center font-bold text-3xl py-3 ${getRankStyle(globalIndex)}`}>
+                  {globalIndex + 1}
+                </TableCell>
+                <TableCell className="font-bold text-2xl py-3 text-gray-800">
+                  {player.name}
+                </TableCell>
+                <TableCell className="text-center text-3xl font-black py-3" style={{color: '#DB0007'}}>
+                  {player.score}
+                </TableCell>
+              </TableRow>
+            );
+          })
+        )}
+      </TableBody>
+    </Table>
+  );
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-600 via-red-700 to-red-800" style={{background: 'linear-gradient(135deg, #DB0007 0%, #FFBC0D 100%)'}}>
+    <div className="min-h-screen bg-yellow-700">
       {/* Discreet action buttons */}
       <div className="absolute top-6 left-6 flex items-center space-x-3">
         <Button 
@@ -74,25 +120,34 @@ const Ranking = () => {
       <div className="px-[4%] py-12 h-screen flex flex-col">
         {/* Cabecera */}
         <div className="flex items-center justify-center mb-8">
-          <Trophy className="h-12 w-12 mr-4 text-yellow-400 drop-shadow-lg" />
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-white drop-shadow-2xl">
-            Ranking de Jugadores
+          <img 
+            src="/lovable-uploads/5a594226-3461-40ca-9838-e0a75ef90f3e.png" 
+            alt="McDonald's Logo" 
+            className="w-10 object-contain"
+          />
+          <h1 className="px-10 text-4xl md:text-5xl font-bold text-center text-white drop-shadow-2xl">
+            Ranking de Jugadores 
           </h1>
+          <img 
+            src="/lovable-uploads/5a594226-3461-40ca-9838-e0a75ef90f3e.png" 
+            alt="McDonald's Logo" 
+            className="w-10 object-contain"
+          />
         </div>
       
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1 w-full">
-          {/* Tabla de ranking (solo visualización) */}
+          {/* Primera tabla - Posiciones 1-10 */}
           <div className="h-full overflow-hidden rounded-2xl shadow-2xl" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gradient-to-r from-red-600 to-yellow-500">
-                  <TableHead className="w-20 text-center text-2xl py-4 text-white font-bold">#</TableHead>
-                  <TableHead className="text-2xl py-4 text-white font-bold">Jugador</TableHead>
-                  <TableHead className="text-center text-2xl py-4 text-white font-bold">Puntos</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {rankedPlayers.length === 0 ? (
+            {rankedPlayers.length === 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-gray-900">
+                    <TableHead className="w-20 text-center text-2xl py-4 text-white font-bold">#</TableHead>
+                    <TableHead className="text-2xl py-4 text-white font-bold">Jugador</TableHead>
+                    <TableHead className="text-center text-2xl py-4 text-white font-bold">Puntos</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   <TableRow>
                     <TableCell colSpan={3} className="text-center py-20">
                       <div className="flex flex-col items-center justify-center text-gray-600">
@@ -102,39 +157,16 @@ const Ranking = () => {
                       </div>
                     </TableCell>
                   </TableRow>
-                ) : (
-                  rankedPlayers.map((player, index) => (
-                    <TableRow key={player.id} className={index < 3 ? "bg-gradient-to-r from-yellow-50 to-red-50" : "bg-white hover:bg-gray-50"}>
-                      <TableCell className={`text-center font-bold text-3xl py-3 ${getRankStyle(index)}`}>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className="font-bold text-2xl py-3 text-gray-800">
-                        {player.name}
-                      </TableCell>
-                      <TableCell className="text-center text-3xl font-black py-3" style={{color: '#DB0007'}}>
-                        {player.score}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+                </TableBody>
+              </Table>
+            ) : (
+              renderTable(firstTenPlayers, 0)
+            )}
           </div>
           
-          {/* Sponsor Logo Section */}
-          <div className="h-full flex items-center justify-center">
-            <div className="rounded-2xl border-4 border-white p-8 flex flex-col items-center justify-center bg-white h-full w-full shadow-2xl">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-80 h-80 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-gray-100">
-                  <img 
-                    src="/lovable-uploads/5a594226-3461-40ca-9838-e0a75ef90f3e.png" 
-                    alt="McDonald's Logo" 
-                    className="w-72 h-72 object-contain"
-                  />
-                </div>
-              </div>
-              <p className="text-3xl font-bold" style={{color: '#DB0007'}}>Patrocinador Oficial</p>
-            </div>
+          {/* Segunda tabla - Posiciones 11-20 */}
+          <div className="h-full overflow-hidden rounded-2xl shadow-2xl" style={{backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
+            {renderTable(nextTenPlayers, 10)}
           </div>
         </div>
       </div>
