@@ -96,7 +96,7 @@ const Ranking = () => {
   );
 
   return (
-    <div className="min-h-screen bg-yellow-700">
+    <div className="min-h-screen bg-yellow-50">
       {/* Discreet action buttons */}
       <div className="absolute top-6 left-6 flex items-center space-x-3">
         <Button 
@@ -125,7 +125,7 @@ const Ranking = () => {
             alt="McDonald's Logo" 
             className="w-10 object-contain"
           />
-          <h1 className="px-10 text-4xl md:text-5xl font-bold text-center text-white drop-shadow-2xl">
+          <h1 className="px-10 text-4xl md:text-5xl font-bold text-center text-yellow-400 drop-shadow-2xl">
             Ranking de Jugadores 
           </h1>
           <img 
