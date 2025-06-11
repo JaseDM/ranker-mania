@@ -47,8 +47,16 @@ const AddPlayerForm = ({ onAddPlayer }: AddPlayerFormProps) => {
                 type="number"
                 min={0}
                 placeholder="Puntos iniciales"
-                value={initialScore}
-                onChange={(e) => setInitialScore(parseInt(e.target.value) || 0)}
+                value={initialScore.toString()}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+
+                  // Elimina ceros a la izquierda
+                  const cleanedValue = inputValue.replace(/^0+(?!$)/, '');
+
+                  const parsed = parseInt(cleanedValue, 10);
+                  setInitialScore(Number.isNaN(parsed) || parsed < 0 ? 0 : parsed);
+                }}
                 className="flex-1"
               />
             </div>

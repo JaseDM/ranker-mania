@@ -1,5 +1,5 @@
 import { usePlayerManager } from '@/hooks/usePlayerManager';
-import { Trophy, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Trophy, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -42,9 +42,9 @@ const Ranking = () => {
 
   // Function to determine rank style based on position
   const getRankStyle = (index: number) => {
-    if (index === 0) return "text-yellow-400 font-bold text-shadow-lg"; // Gold for 1st
-    if (index === 1) return "text-yellow-600 font-bold text-shadow-lg"; // Silver for 2nd
-    if (index === 2) return "text-amber-600 font-bold text-shadow-lg"; // Bronze for 3rd
+    if (index === 0) return "text-yellow-500 font-bold text-shadow-lg"; // Gold for 1st
+    if (index === 1) return "text-gray-400 font-bold text-shadow-lg"; // Silver for 2nd
+    if (index === 2) return "text-amber-700 font-bold text-shadow-lg"; // Bronze for 3rd
     return "text-gray-300 font-semibold"; // Others
   };
 
@@ -105,7 +105,7 @@ const Ranking = () => {
           onClick={() => navigate('/')} 
           className="text-white hover:text-yellow-300 hover:bg-white/10 text-xl p-4"
         >
-          <ArrowLeft className="h-6 w-6" />
+          <ArrowLeft className="h-6 w-6 text-black" />
         </Button>
         <Button
           variant="ghost"
@@ -113,7 +113,7 @@ const Ranking = () => {
           onClick={handleRefresh}
           className="text-white hover:text-yellow-300 hover:bg-white/10 text-xl p-4"
         >
-          <RefreshCw className="h-6 w-6" />
+          
         </Button>
       </div>
       
